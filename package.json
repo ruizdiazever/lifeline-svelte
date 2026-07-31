@@ -25,7 +25,20 @@
     "build": "svelte-package",
     "package": "svelte-package && publint",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "prepare": "svelte-package"
+    "prepublishOnly": "svelte-package && publint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ruizdiazever/lifeline-svelte.git"
+  },
+  "keywords": [
+    "svelte",
+    "svelte5",
+    "timeline",
+    "component"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "peerDependencies": {
     "svelte": "^5.0.0",
