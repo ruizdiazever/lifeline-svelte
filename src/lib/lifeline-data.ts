@@ -9,6 +9,43 @@ export const LIFELINE_CURRENT_YEAR = 2026
 export type LifelineMilestone = Omit<LifelineMarker, "year">
 export type LifelineMilestones = Record<number, LifelineMilestone>
 
+export type LifelineGranularity = "years" | "months"
+
+const MONTH_NAMES = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+] as const
+
+/** YYYYMM → absolute month index (consecutive months differ by 1). */
+function monthIndex(key: number): number {
+  const year = Math.floor(key / 100)
+  const month = key % 100
+  if (month < 1 || month > 12) {
+    throw new Error(`Invalid month key ${key} — use YYYYMM (e.g. 202405)`)
+  }
+  return year * 12 + (month - 1)
+}
+
+/** Absolute month index → YYYYMM. */
+function monthKey(index: number): number {
+  return Math.floor(index / 12) * 100 + (index % 12) + 1
+}
+
+function currentMonthKey(): number {
+  const now = new Date()
+  return now.getFullYear() * 100 + now.getMonth() + 1
+}
+
 export interface LifelineRecord {
   slug: string
   name: string
@@ -26,6 +63,10 @@ interface DefineLifelineInput {
   name: string
   birthYear: number
   endYear?: number
+  /** Axis unit. "months" expects YYYYMM milestone keys (e.g. 202405). */
+  granularity?: LifelineGranularity
+  /** Last month on the timeline (YYYYMM). Defaults to the current month. */
+  endMonth?: number
   description: string
   legend?: LifelineLegendItem[]
   milestones: LifelineMilestones
@@ -59,7 +100,20 @@ export function localizeLifelineMarkers(
 }
 
 export function defineLifeline(input: DefineLifelineInput): LifelineRecord {
-  const { milestones, ...record } = input
+  const { milestones, granularity = "years", ...record } = input
+
+  const markers: LifelineMarker[] =
+    granularity === "months"
+      ? buildMonthMarkers(input, milestones)
+      : buildYearMarkers(input, milestones)
+
+  return { ...record, markers }
+}
+
+function buildYearMarkers(
+  input: DefineLifelineInput,
+  milestones: LifelineMilestones,
+): LifelineMarker[] {
   const lastYear = input.endYear ?? LIFELINE_CURRENT_YEAR
   const markers: LifelineMarker[] = []
 
@@ -73,5 +127,50 @@ export function defineLifeline(input: DefineLifelineInput): LifelineRecord {
     )
   }
 
-  return { ...record, markers }
+  return markers
+}
+
+/**
+ * Months mode: the rail is one column per month. `year` carries the
+ * absolute month index (so gaps and widths work in months), while
+ * `label` ("May 2024", then "Jun", "Jul"…, year repeated each January)
+ * and `age` (company age, shown at January columns) carry the display.
+ */
+function buildMonthMarkers(
+  input: DefineLifelineInput,
+  milestones: LifelineMilestones,
+): LifelineMarker[] {
+  const keys = Object.keys(milestones)
+    .map(Number)
+    .sort((a, b) => a - b)
+  const startIndex =
+    keys.length > 0 ? monthIndex(keys[0]) : input.birthYear * 12
+  const endIndex = monthIndex(input.endMonth ?? currentMonthKey())
+  const markers: LifelineMarker[] = []
+
+  for (let index = startIndex; index <= endIndex; index++) {
+    const key = monthKey(index)
+    const year = Math.floor(key / 100)
+    const month = key % 100
+    const isFirst = index === startIndex
+    const isJanuary = month === 1
+    const label =
+      isFirst || isJanuary
+        ? `${MONTH_NAMES[month - 1]} ${year}`
+        : MONTH_NAMES[month - 1]
+    const age: number | string = isFirst
+      ? 0
+      : isJanuary
+        ? year - input.birthYear
+        : ""
+    const milestone = milestones[key]
+
+    markers.push(
+      milestone
+        ? { year: index, label, age, ...milestone }
+        : { id: `month-${key}`, year: index, label, age, events: [] },
+    )
+  }
+
+  return markers
 }

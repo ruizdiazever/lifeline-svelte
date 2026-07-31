@@ -20,7 +20,7 @@ export { default as LifelineFooter } from "./lifeline-footer.svelte";
 
 export { registerCompanyIcons, type CompanyIconEntry, type CompanyIconId } from "./company-icon";
 export { defineLifeline, localizeLifelineMarkers, LIFELINE_CURRENT_YEAR } from "./lifeline-data";
-export type { LifelineRecord, LifelineMilestone, LifelineMilestones, LifelineTextOverrides } from "./lifeline-data";
+export type { LifelineRecord, LifelineMilestone, LifelineMilestones, LifelineTextOverrides, LifelineGranularity } from "./lifeline-data";
 export { createLifelineScroll, type LifelineScrollOptions } from "./lifeline-scroll.svelte";
 export { createLifelineVerticalScroll, type LifelineVerticalScrollOptions } from "./lifeline-vertical-scroll.svelte";
 export { createLifelineIntro } from "./lifeline-intro.svelte";

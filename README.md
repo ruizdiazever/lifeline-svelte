@@ -70,6 +70,27 @@ Dark mode is class-based (`.dark` on `<html>`), matching the `dark:` variants th
 
 `mode`: `"page"` (the timeline owns the wheel), `"embed"` (hands the wheel back at the rail's ends), `"auto"` (measured at runtime).
 
+### Month granularity
+
+By default the rail is one column per year. For young stories — a company, a product — `granularity: "months"` makes it one column per month, keyed `YYYYMM`:
+
+```ts
+const record = defineLifeline({
+  slug: "acme",
+  name: "Acme",
+  birthYear: 2024,
+  granularity: "months",
+  // endMonth: 202607 — defaults to the current month
+  description: "Acme, month by month.",
+  milestones: {
+    202405: { id: "founded", events: ["Founded."] },
+    202501: { id: "seed", events: ["Raised a seed round."] },
+  },
+});
+```
+
+Columns label themselves `May 2024`, then `Jun`, `Jul`…, repeating the year each January; the Age row shows the company age at January columns. Empty months render as air, which is the point.
+
 The vertical (mobile) layout measures itself against the nearest ancestor whose `overflow-y` is `auto` or `scroll` — give it one. Desktop scrubs sideways and wants no scroller of its own.
 
 Typography: the timeline typesets itself in Geist via `.lifeline-typeset`; set `--lifeline-font` to use your own face.
