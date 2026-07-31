@@ -8,13 +8,16 @@ Svelte 5 (runes) port of [evilrabbit/lifeline](https://github.com/evilrabbit/lif
 
 ## Install
 
-From GitHub:
+From npm:
 
 ```bash
-pnpm add github:ruizdiazever/lifeline-svelte
+pnpm add lifeline-svelte
+# or: npm install lifeline-svelte
 ```
 
-The package builds itself on install (`prepare` runs `svelte-package`). Peer dependencies: `svelte@^5` and `tailwindcss@^4`.
+The package ships prebuilt (`dist/`), so nothing compiles on install. Peer dependencies: `svelte@^5` and `tailwindcss@^4`.
+
+To install straight from GitHub instead: `pnpm add github:ruizdiazever/lifeline-svelte`.
 
 ## Setup
 
@@ -117,6 +120,13 @@ pnpm install
 pnpm dev       # demo app (Vite)
 pnpm check     # svelte-check
 pnpm package   # svelte-package + publint → dist/
+```
+
+## Publishing
+
+```bash
+npm version patch   # bump version
+npm publish         # prepublishOnly runs build + publint
 ```
 
 The demo data lives in `demo/data/`; assets in `public/images/` are demo-only and not part of the package.
