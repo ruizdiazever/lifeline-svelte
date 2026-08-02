@@ -65,6 +65,12 @@ interface DefineLifelineInput {
   endYear?: number
   /** Axis unit. "months" expects YYYYMM milestone keys (e.g. 202405). */
   granularity?: LifelineGranularity
+  /**
+   * Founding month (1-12) for the Age row in months mode. When set, the
+   * age shows at each founding-month column (0 at May 2024, 1 at May
+   * 2025…). Defaults to January columns.
+   */
+  birthMonth?: number
   /** Last month on the timeline (YYYYMM). Defaults to the current month. */
   endMonth?: number
   description: string
@@ -158,11 +164,19 @@ function buildMonthMarkers(
       isFirst || isJanuary
         ? `${MONTH_NAMES[month - 1]} ${year}`
         : MONTH_NAMES[month - 1]
-    const age: number | string = isFirst
-      ? 0
-      : isJanuary
-        ? year - input.birthYear
-        : ""
+    const birthMonth = input.birthMonth
+    const isFoundingMonth =
+      birthMonth !== undefined && month === birthMonth && year >= input.birthYear
+    const age: number | string =
+      birthMonth !== undefined
+        ? isFoundingMonth
+          ? year - input.birthYear
+          : ""
+        : isFirst
+          ? 0
+          : isJanuary
+            ? year - input.birthYear
+            : ""
     const milestone = milestones[key]
 
     markers.push(

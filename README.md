@@ -89,7 +89,7 @@ const record = defineLifeline({
 });
 ```
 
-Columns label themselves `May 2024`, then `Jun`, `Jul`…, repeating the year each January; the Age row shows the company age at January columns. Empty months render as air, which is the point.
+Columns label themselves `May 2024`, then `Jun`, `Jul`…, repeating the year each January. The Age row shows the company age at January columns — or at each founding-month column if you pass `birthMonth` (e.g. `birthMonth: 5` shows 0 at May 2024, 1 at May 2025). Empty months render as air, which is the point.
 
 The vertical (mobile) layout measures itself against the nearest ancestor whose `overflow-y` is `auto` or `scroll` — give it one. Desktop scrubs sideways and wants no scroller of its own.
 
