@@ -68,7 +68,7 @@ export interface LifelineMarker {
   label?: string;
   events: LifelineEvent[];
   /** Small emblems (team shields etc.) rendered above the events. */
-  badges?: { src: string; alt: string }[];
+  badges?: { src: string; alt: string; /** Pixels; default 24. */ size?: number }[];
   /** Floating media cards anchored to this marker's stretch of the timeline. */
   photos?: LifelinePhoto[];
   companies?: LifelineCompany[];

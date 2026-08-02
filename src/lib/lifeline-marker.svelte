@@ -99,6 +99,8 @@
                   src={badge.src}
                   alt={badge.alt}
                   class="h-6 w-6 object-contain opacity-80 transition-opacity duration-300 group-hover:opacity-100"
+                  style:width={badge.size ? `${badge.size}px` : undefined}
+                  style:height={badge.size ? `${badge.size}px` : undefined}
                 />
               {/each}
             </div>
