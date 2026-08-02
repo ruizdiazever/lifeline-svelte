@@ -34,6 +34,9 @@
   const age = $derived(marker.age ?? marker.year - birthYear);
   const people = $derived(aggregateLifelinePeople(marker));
   const photos = $derived(marker.photos ?? []);
+  /** Decorative blobs render on their own row; only real media fans out. */
+  const artPhotos = $derived(photos.filter((photo) => photo.plain));
+  const cardPhotos = $derived(photos.filter((photo) => !photo.plain));
   const hasContent = $derived(hasMarkerContent(marker) || photos.length > 0);
 
   // Fresh tilts per visit; stacked neighbors lean apart.
@@ -113,14 +116,27 @@
             </div>
           {/if}
 
-          {#if photos.length > 0}
-            <div class="mt-6 flex flex-wrap items-start">
-              {#each photos as photo, index (`${photo.src}-${index}`)}
+          {#if artPhotos.length > 0}
+            <div class="mt-6 flex flex-wrap items-start gap-4">
+              {#each artPhotos as photo, index (`${photo.src}-${index}`)}
                 <LifelinePhotoCard
                   {photo}
                   rotate={photo.rotate ?? photoTilts[index] ?? 0}
-                  width={160}
-                  class={cn("relative", index > 0 && "-ml-8 mt-6")}
+                  width={140}
+                  class="relative"
+                />
+              {/each}
+            </div>
+          {/if}
+
+          {#if cardPhotos.length > 0}
+            <div class="mt-6 flex flex-wrap items-start">
+              {#each cardPhotos as photo, index (`${photo.src}-${index}`)}
+                <LifelinePhotoCard
+                  {photo}
+                  rotate={photo.rotate ?? photoTilts[index] ?? 0}
+                  width={140}
+                  class={cn("relative", index > 0 && "-ml-12 mt-6")}
                 />
               {/each}
             </div>
