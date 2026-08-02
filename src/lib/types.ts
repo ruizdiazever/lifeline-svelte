@@ -42,6 +42,11 @@ export interface LifelinePhoto extends LifelineEventImage {
   rotate?: number;
   /** Card width in pixels. Default 180. */
   width?: number;
+  /**
+   * Decorative mode: no card chrome, no drag, no lightbox — the media
+   * just floats at its anchor (e.g. hand-drawn blob art above the rail).
+   */
+  plain?: boolean;
 }
 
 export type LifelineEventEffect = "fireworks" | "fireworks-argentina";

@@ -125,36 +125,45 @@
 
 <div
   bind:this={cardEl}
-  data-lifeline-interactive=""
+  data-lifeline-interactive={photo.plain ? undefined : ""}
   class={cn(
     // pan-y keeps page scrolling alive on touch: a vertical swipe
     // starting on a card scrolls the timeline (the browser claims
     // the gesture and fires pointercancel); horizontal drags move
     // the card.
-    "group/photo pointer-events-auto cursor-grab touch-pan-y",
-    active ? "z-50 cursor-grabbing" : "z-20 hover:z-40",
+    photo.plain
+      ? "pointer-events-none"
+      : "group/photo pointer-events-auto cursor-grab touch-pan-y",
+    !photo.plain && (active ? "z-50 cursor-grabbing" : "z-20 hover:z-40"),
     lightboxStart && "invisible",
     className,
   )}
   style={cardStyle}
-  onpointerdown={handlePointerDown}
-  onpointermove={handlePointerMove}
-  onpointerup={handlePointerUp}
-  onpointercancel={handlePointerCancel}
+  onpointerdown={photo.plain ? undefined : handlePointerDown}
+  onpointermove={photo.plain ? undefined : handlePointerMove}
+  onpointerup={photo.plain ? undefined : handlePointerUp}
+  onpointercancel={photo.plain ? undefined : handlePointerCancel}
 >
-  <div
-    class={cn(
-      "overflow-hidden rounded-xl shadow-xl ring-1 ring-black/10 transition-[transform,box-shadow] duration-200 ease-out dark:ring-white/15",
-      animateIntro && "lifeline-marker-intro",
-      active
-        ? "scale-[1.05] shadow-2xl"
-        : "group-hover/photo:scale-[1.03] group-hover/photo:shadow-2xl",
-    )}
-    style:animation-delay={animateIntro ? `${introDelay}ms` : undefined}
-    style:--lifeline-marker-fade-ms={animateIntro ? `${introDuration}ms` : undefined}
-  >
-    <LifelineEventMedia media={photo} class="pointer-events-none block w-full" />
-  </div>
+  {#if photo.plain}
+    <LifelineEventMedia
+      media={photo}
+      class="pointer-events-none block w-full {animateIntro ? 'lifeline-marker-intro' : ''}"
+    />
+  {:else}
+    <div
+      class={cn(
+        "overflow-hidden rounded-xl shadow-xl ring-1 ring-black/10 transition-[transform,box-shadow] duration-200 ease-out dark:ring-white/15",
+        animateIntro && "lifeline-marker-intro",
+        active
+          ? "scale-[1.05] shadow-2xl"
+          : "group-hover/photo:scale-[1.03] group-hover/photo:shadow-2xl",
+      )}
+      style:animation-delay={animateIntro ? `${introDelay}ms` : undefined}
+      style:--lifeline-marker-fade-ms={animateIntro ? `${introDuration}ms` : undefined}
+    >
+      <LifelineEventMedia media={photo} class="pointer-events-none block w-full" />
+    </div>
+  {/if}
 </div>
 
 {#if lightboxStart}
