@@ -6,7 +6,7 @@ export function clamp(value: number, min: number, max: number) {
 
 /**
  * A composited layer resting on a fractional offset resamples its whole
- * subtree — text goes soft. Snapping to the device pixel grid (not whole
+ * subtree. Text goes soft. Snapping to the device pixel grid (not whole
  * CSS pixels) keeps half-pixel steps on retina, so motion stays smooth.
  */
 export function snapToDevicePixel(value: number) {

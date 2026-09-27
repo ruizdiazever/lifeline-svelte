@@ -85,7 +85,7 @@ function getViewportCoverage(element: HTMLElement) {
 /**
  * Is there a vertical scroll behind this element for a released wheel to
  * drive? Walks out to the document, stopping at the first ancestor that
- * clips — a `LifelineShell` is `overflow-hidden`, so nothing escapes it.
+ * clips. A `LifelineShell` is `overflow-hidden`, so nothing escapes it.
  */
 function hasReleasableScroll(section: HTMLElement) {
   let node = section.parentElement;
@@ -198,7 +198,7 @@ export function createLifelineScroll(
 
     if (isSticky) {
       // Derived from the track's snapped offset so the two transforms
-      // cancel to exactly LIFELINE_STICKY_LEFT — the pinned labels
+      // cancel to exactly LIFELINE_STICKY_LEFT. The pinned labels
       // must not drift a fraction against the snapped track.
       const labelExtra = LIFELINE_STICKY_LEFT - snapToDevicePixel(startInset - translate);
       labels.style.transform = `translate3d(${labelExtra}px, 0, 0)`;
@@ -221,8 +221,8 @@ export function createLifelineScroll(
     const section = refs.section;
     if (!section) return;
 
-    // All fade math is relative to the section's own box — the lifeline
-    // may be embedded anywhere, not pinned to the viewport.
+    // All fade math is relative to the section's own box, because the
+    // lifeline may be embedded anywhere, not pinned to the viewport.
     const stageRect = section.getBoundingClientRect();
     const isCoarse = getOptions().isCoarsePointer ?? false;
     const fadeZone = isCoarse ? FADE_ZONE_COARSE : FADE_ZONE;
@@ -238,7 +238,7 @@ export function createLifelineScroll(
       let opacity = 1;
 
       // Fade a marker out only as scrubbing carries it left of where
-      // it rests at translate 0 — the first markers naturally live
+      // it rests at translate 0. The first markers naturally live
       // inside the fade zone and must not open dimmed.
       const naturalLeft = markerLeft + translatePx;
       const restLeft = Math.min(naturalLeft, leftFadeZone);
@@ -273,7 +273,7 @@ export function createLifelineScroll(
     translatePx = next;
 
     if (refs.track) {
-      // Snapped only at the DOM boundary — translatePx stays float so
+      // Snapped only at the DOM boundary. translatePx stays float so
       // wheel/drag/settle physics never accumulate rounding.
       refs.track.style.transform = `translate3d(${snapToDevicePixel(startInset - next)}px, 0, 0)`;
     }
@@ -286,7 +286,7 @@ export function createLifelineScroll(
    * Page mode or embedded? An explicit `mode` decides it outright.
    * `"auto"` measures: the timeline is the page only when it covers most
    * of the viewport *and* there is nothing behind it left to scroll.
-   * Both halves matter — a full-bleed hero section on a long landing page
+   * Both halves matter: a full-bleed hero section on a long landing page
    * covers the viewport but must still hand the wheel back at the ends.
    *
    * Cached for MODE_RESOLVE_STALE_MS because this reads layout and the
@@ -342,7 +342,7 @@ export function createLifelineScroll(
 
     /**
      * A full-page lifeline always follows the host chrome. An embedded one
-     * follows it only when the module actually spans it — a full-bleed
+     * follows it only when the module actually spans it. A full-bleed
      * module lines its rail up with the logo and the container's right edge,
      * exactly as the full-page version does, while a timeline in a narrow
      * card has nothing to align to a nav sitting outside its own box and
@@ -365,7 +365,7 @@ export function createLifelineScroll(
     if (followChrome && navRight !== null) {
       endInset = navRight;
     } else {
-      // No chrome to align with, or none this module spans — end the track
+      // No chrome to align with, or none this module spans. End the track
       // at the stage's own right edge instead.
       endInset = stageRect.width - NAV_HORIZONTAL_PADDING;
     }
@@ -390,13 +390,13 @@ export function createLifelineScroll(
   // Initial measure + first paint position.
   $effect(() => {
     // A timeline short enough to fit its stage measures max = 0. It still has
-    // to be shown — gating readiness on a scrollable track left any small
+    // to be shown: gating readiness on a scrollable track left any small
     // timeline permanently `invisible`.
     const max = measureLayout();
 
     if (!initialized) {
       // A skipped intro parks the rail where the intro would have settled
-      // it — its end, the present. Embedded is no different: it is the same
+      // it: its end, the present. Embedded is no different: it is the same
       // intro and the same resting place.
       translatePx = (getOptions().introSkipped ?? false) ? max : 0;
       initialized = true;
@@ -408,8 +408,8 @@ export function createLifelineScroll(
 
   /**
    * A full-page lifeline opens as the page opens, so its intro needs no
-   * cue. An embedded one can be anywhere, including far below the fold —
-   * playing there would spend the sweep on nobody. So it waits until the
+   * cue. An embedded one can be anywhere, including far below the fold.
+   * Playing there would spend the sweep on nobody, so it waits until the
    * module is about to come into view.
    */
   $effect(() => {
@@ -431,7 +431,7 @@ export function createLifelineScroll(
     return () => observer.disconnect();
   });
 
-  // Intro rail sweep — rAF-driven translate while the intro plays.
+  // Intro rail sweep: rAF-driven translate while the intro plays.
   $effect(() => {
     if (!isLayoutReady) return;
     // Embedded, hold the sweep until the module is in view. `isLayoutReady`
@@ -458,8 +458,8 @@ export function createLifelineScroll(
       if (max <= 0) {
         // Nothing to travel: a timeline that fits its stage has no rail to
         // sweep. Waiting for one spun this loop forever and left the intro
-        // lock on, so run the intro out where it already is — the markers
-        // and labels still get their fade, there is just no journey.
+        // lock on, so run the intro out where it already is. The markers
+        // and labels still get their fade; there is just no journey.
         if (!introStarted) {
           introStarted = true;
           introScrollStart = now;
@@ -596,13 +596,13 @@ export function createLifelineScroll(
     };
 
     const measure = () => {
-      // max === 0 is a legitimate measurement — a timeline that fits — so it
+      // max === 0 is a legitimate measurement (a timeline that fits), so it
       // must not skip the ready flag either.
       const max = measureLayout();
 
       translatePx = clamp(translatePx, 0, max);
 
-      // During intro scroll, the rAF loop owns translate — only refresh bounds.
+      // During intro scroll, the rAF loop owns translate; only refresh bounds.
       if (!((getOptions().introAnimating ?? false) && introStarted)) {
         applyTranslate(translatePx);
       }
@@ -652,8 +652,8 @@ export function createLifelineScroll(
 
     /**
      * Segments the wheel stream into gestures, before the section's own
-     * handler sees the event — a capture listener on the window runs ahead
-     * of the target. The section alone cannot tell a gesture that started
+     * handler sees the event, because a capture listener on the window runs
+     * ahead of the target. The section alone cannot tell a gesture that started
      * on it from a page-scroll gesture that merely arrived on it, because
      * it only sees events once it is under the pointer.
      */
@@ -686,7 +686,7 @@ export function createLifelineScroll(
        * The two axes are not the same gesture and do not share a sign.
        *
        * Vertical is page scrolling: the intro leaves the rail at the
-       * present, and scrolling down walks back through it — the same in both
+       * present, and scrolling down walks back through it, the same in both
        * modes. Embedding changes where the wheel *goes* at the ends of the
        * rail, not which way the rail travels.
        *
@@ -730,7 +730,7 @@ export function createLifelineScroll(
         return;
       }
 
-      // Moving again — a reversal re-arms the hold at the other end.
+      // Moving again: a reversal re-arms the hold at the other end.
       boundaryHitAt = 0;
       event.preventDefault();
       scrub(movement, target);

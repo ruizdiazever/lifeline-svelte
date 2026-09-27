@@ -39,7 +39,7 @@
     const targetTilt = clamp(dx * TILT_FACTOR, -TILT_MAX_DEG, TILT_MAX_DEG);
     s.tilt += (targetTilt - s.tilt) * TILT_EASE;
 
-    // The ease is asymptotic — it never actually arrives, so the card
+    // The ease is asymptotic: it never actually arrives, so the card
     // rests on a fractional offset with a residual tilt and the browser
     // resamples it soft. Land it: snap sub-threshold deltas to done.
     if (Math.abs(s.targetX - s.x) < 0.1 && Math.abs(s.targetY - s.y) < 0.1 && Math.abs(s.tilt) < 0.05) {
@@ -97,7 +97,7 @@
     const targetSrc = new URL(image.src, window.location.origin).href;
 
     if (img.src !== targetSrc) {
-      // Kill the previous bitmap instantly — the browser would keep
+      // Kill the previous bitmap instantly, because the browser would keep
       // showing it until the new file decodes.
       img.style.visibility = "hidden";
       img.src = targetSrc;

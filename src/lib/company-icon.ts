@@ -4,7 +4,7 @@ export type CompanyIconId = string;
 
 export interface CompanyIconEntry {
   icon: Component<{ class?: string }>;
-  /** Tailwind size for the mark — wordmarks want a wide box. */
+  /** Tailwind size for the mark: wordmarks want a wide box. */
   sizeClassName?: string;
 }
 

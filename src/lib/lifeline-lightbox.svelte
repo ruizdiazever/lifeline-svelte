@@ -6,7 +6,7 @@
 
   const OPEN_MS = 520;
   /**
-   * Gentle start, soft landing — the quint curve front-loaded nearly all
+   * Gentle start, soft landing. The quint curve front-loaded nearly all
    * of the travel into the first 120ms, which read as a jump.
    */
   const EASE = "cubic-bezier(0.32, 0.72, 0, 1)";
@@ -28,7 +28,7 @@
     onClosed,
   }: {
     photo: LifelinePhoto;
-    /** The card's resting tilt — animated away as the media centers. */
+    /** The card's resting tilt, animated away as the media centers. */
     rotate: number;
     /** The card's geometry at click time. */
     start: LifelineLightboxStart;
@@ -51,7 +51,7 @@
 
   /**
    * Expands a floating card's media from its spot on the timeline to the
-   * center of the screen and back — a FLIP animation on a fixed clone
+   * center of the screen and back: a FLIP animation on a fixed clone
    * portaled to <body> (the track is transformed, so fixed positioning
    * inside it would break). The original card stays in layout, hidden,
    * and is re-measured on dismiss so the media returns wherever the card
@@ -74,7 +74,7 @@
   let entered = $state(reduceMotion);
   let transform = $state(reduceMotion ? "none" : untrack(() => toTransform(start)));
   let closing = false;
-  // Playback waits for the open transition to finish — a playing
+  // Playback waits for the open transition to finish, because a playing
   // video decodes frames while the transform animates and drops
   // transition frames on mobile; a paused, pre-seeked frame is a
   // static layer and animates cheaply.
@@ -90,15 +90,15 @@
   let video: HTMLVideoElement | undefined = $state();
   let seeded = false;
 
-  // Videos mount paused, pre-seeked to the card's playback position —
-  // a static frame the compositor can scale without decoding — and only
+  // Videos mount paused, pre-seeked to the card's playback position
+  // (a static frame the compositor can scale without decoding), and only
   // play once `settled` flips after the open transition settles.
   // Dismissing pauses again for the return flight.
   $effect(() => {
     const el = video;
     if (!el) return;
     if (settled) {
-      // Seek only now, stationary — a seek during the transition
+      // Seek only now, stationary, because a seek during the transition
       // decodes a new frame mid-flight and visibly swaps the image.
       if (!seeded) {
         seeded = true;
@@ -137,7 +137,7 @@
     };
   });
 
-  // No gesture may pan while the lightbox is up — iOS otherwise
+  // No gesture may pan while the lightbox is up; iOS otherwise
   // rubber-bands the body behind the fixed overlay and can leave the
   // whole page stuck offset after dismiss. This needs a native
   // non-passive touch listener.
@@ -148,7 +148,7 @@
   });
 
   // The press that opens the card dispatches one more click right
-  // after pointerup — by then the clone is mounted underneath the
+  // after pointerup. By then the clone is mounted underneath the
   // pointer and would dismiss itself. Swallow exactly that click;
   // every later click dismisses normally.
   $effect(() => {

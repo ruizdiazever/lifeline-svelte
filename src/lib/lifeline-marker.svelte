@@ -85,7 +85,7 @@
              their portraits on the same line as every other column, and
              a column whose events run past the floor pushes its own
              portraits below them instead of under them. pb-6 is the gap
-             in the overflow case — absorbed by the floor otherwise. -->
+             in the overflow case, absorbed by the floor otherwise. -->
         <div
           class={cn(
             "flex w-full flex-col items-start pt-6",

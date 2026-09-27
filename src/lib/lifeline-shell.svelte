@@ -5,7 +5,7 @@
   /**
    * The page framing the Lifeline expects.
    *
-   * The rail is not sized by CSS — on desktop it measures where to start
+   * The rail is not sized by CSS. On desktop it measures where to start
    * and end from the nav: `data-site-nav-logo` gives it the start, and the
    * right edge of `data-site-nav-inner` gives it the end. That is what
    * keeps the timeline inset from the viewport and aligned with the rest

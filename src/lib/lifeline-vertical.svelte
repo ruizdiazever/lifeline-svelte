@@ -14,7 +14,7 @@
    * Above this many entries the delay-armed intro fades would promote
    * every entry to a compositor layer at once and crash mobile Safari's
    * compositor. Long timelines fade entries in as they enter the
-   * viewport during the auto-scroll instead — same look, but only a
+   * viewport during the auto-scroll instead. Same look, but only a
    * handful of live animations at any moment.
    */
   const MAX_ARMED_ENTRIES = 80;
@@ -33,7 +33,7 @@
   const intro = createLifelineIntro(() => heights);
   const isIntroAnimating = $derived(intro.shouldPlay && intro.isPlaying);
 
-  // Warm the event media posters during idle — the tap-to-open
+  // Warm the event media posters during idle: the tap-to-open
   // lightbox measures its frame from these, and a cold fetch at tap
   // time reads as lag.
   $effect(() => {
@@ -67,7 +67,7 @@
       isEmbed,
       introLocked: isIntroAnimating,
       introAnimating: isIntroAnimating,
-      // Embedded, the sweep would play out unseen below the fold — and
+      // Embedded, the sweep would play out unseen below the fold and
       // lock the module's own scroller while doing it.
       introSkipped: !intro.shouldPlay || isEmbed,
       introRailMs: intro.railDuration,
@@ -83,8 +83,8 @@
 
   // Rail-synced fades for long timelines: entries render hidden and
   // each one fades in the moment the rail tip (--lifeline-intro-progress,
-  // written every frame by the intro scroll) crosses its position —
-  // desktop's choreography, but each entry drops its animation (and
+  // written every frame by the intro scroll) crosses its position. It is
+  // desktop's choreography, except each entry drops its animation (and
   // compositor layer) as soon as its fade finishes.
   $effect(() => {
     if (!showIntro || !revealOnScroll) return;

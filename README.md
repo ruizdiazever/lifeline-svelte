@@ -1,6 +1,6 @@
 # Lifeline (Svelte 5)
 
-A timeline component for the stories that unfold over time — a career, a company, a journey.
+A timeline component for the stories that unfold over time: a career, a company, a journey.
 
 Lifeline lays milestones on a single rail: horizontal and scrubbed by scroll on desktop, vertical on mobile. Years carry events, links, and the people who mattered; media attaches as hover reveals or floating cards that expand into a lightbox. On first load, an intro draws the rail across the years.
 
@@ -72,7 +72,7 @@ Dark mode is class-based (`.dark` on `<html>`), matching the `dark:` variants th
 
 ### Month granularity
 
-By default the rail is one column per year. For young stories — a company, a product — `granularity: "months"` makes it one column per month, keyed `YYYYMM`:
+By default the rail is one column per year. For young stories such as a company or a product, `granularity: "months"` makes it one column per month, keyed `YYYYMM`:
 
 ```ts
 const record = defineLifeline({
@@ -80,7 +80,7 @@ const record = defineLifeline({
   name: "Acme",
   birthYear: 2024,
   granularity: "months",
-  // endMonth: 202607 — defaults to the current month
+  // endMonth: 202607 (defaults to the current month)
   description: "Acme, month by month.",
   milestones: {
     202405: { id: "founded", events: ["Founded."] },
@@ -89,9 +89,9 @@ const record = defineLifeline({
 });
 ```
 
-Columns label themselves `May 2024`, then `Jun`, `Jul`…, repeating the year each January. The Age row shows the company age at January columns — or at each founding-month column if you pass `birthMonth` (e.g. `birthMonth: 5` shows 0 at May 2024, 1 at May 2025). Empty months render as air, which is the point.
+Columns label themselves `May 2024`, then `Jun`, `Jul`…, repeating the year each January. The Age row shows the company age at January columns, or at each founding-month column if you pass `birthMonth` (e.g. `birthMonth: 5` shows 0 at May 2024, 1 at May 2025). Empty months render as air, which is the point.
 
-The vertical (mobile) layout measures itself against the nearest ancestor whose `overflow-y` is `auto` or `scroll` — give it one. Desktop scrubs sideways and wants no scroller of its own.
+The vertical (mobile) layout measures itself against the nearest ancestor whose `overflow-y` is `auto` or `scroll`. Give it one. Desktop scrubs sideways and wants no scroller of its own.
 
 Typography: the timeline typesets itself in Geist via `.lifeline-typeset`; set `--lifeline-font` to use your own face.
 

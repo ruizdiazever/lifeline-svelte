@@ -1,7 +1,7 @@
 {
   "name": "lifeline-svelte",
   "version": "0.3.0",
-  "description": "Interactive timeline component for Svelte 5 — port of Lifeline by evilrabbit",
+  "description": "Interactive timeline component for Svelte 5, a port of Lifeline by evilrabbit",
   "license": "MIT",
   "type": "module",
   "svelte": "./dist/index.js",

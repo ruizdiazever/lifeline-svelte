@@ -11,7 +11,7 @@ function getScrollParent(element: HTMLElement | null): HTMLElement | null {
     node = node.parentElement;
   }
 
-  // Nothing on the way up scrolls, so the document does — which is the
+  // Nothing on the way up scrolls, so the document does, which is the
   // ordinary case for a page-mode timeline in a page that just scrolls.
   // Returning null here left the whole rail `invisible` with no error.
   return (document.scrollingElement as HTMLElement | null) ?? null;
@@ -20,7 +20,7 @@ function getScrollParent(element: HTMLElement | null): HTMLElement | null {
 export interface LifelineVerticalScrollOptions {
   /**
    * Embedded, the timeline opens at its start rather than where a skipped
-   * intro would have settled it — the reader is arriving at a module in a
+   * intro would have settled it. The reader is arriving at a module in a
    * page, not returning to a timeline that already played.
    */
   isEmbed?: boolean;
@@ -104,7 +104,7 @@ export function createLifelineVerticalScroll(
     isLayoutReady = entryRefs.every((entry) => Boolean(entry));
   });
 
-  // Intro sweep — rAF-driven native scroll while the intro plays.
+  // Intro sweep: rAF-driven native scroll while the intro plays.
   $effect(() => {
     if (!isLayoutReady) return;
 

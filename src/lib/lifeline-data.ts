@@ -31,7 +31,7 @@ function monthIndex(key: number): number {
   const year = Math.floor(key / 100)
   const month = key % 100
   if (month < 1 || month > 12) {
-    throw new Error(`Invalid month key ${key} — use YYYYMM (e.g. 202405)`)
+    throw new Error(`Invalid month key ${key}: use YYYYMM (e.g. 202405)`)
   }
   return year * 12 + (month - 1)
 }
@@ -80,7 +80,7 @@ interface DefineLifelineInput {
 
 /**
  * Translated event texts keyed by year, aligned by index with the
- * source milestone's events. Only the text is swapped — images,
+ * source milestone's events. Only the text is swapped; images,
  * effects, mentors, and structure stay single-sourced.
  */
 export type LifelineTextOverrides = Record<number, string[]>

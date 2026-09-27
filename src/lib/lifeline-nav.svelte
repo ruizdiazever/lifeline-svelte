@@ -5,7 +5,7 @@
   const CONTAINER = "mx-auto flex w-full max-w-5xl items-center px-6";
 
   interface Props {
-    /** Rendered inside the marked anchor — the rail starts at its left edge. */
+    /** Rendered inside the marked anchor: the rail starts at its left edge. */
     logo: Snippet;
     logoHref?: string;
     /** Accessible name for the logo link. */

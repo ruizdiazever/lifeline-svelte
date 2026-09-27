@@ -1,7 +1,7 @@
 import { defineLifeline } from "$lib/lifeline-data"
 
 /**
- * Company timeline starter — founding to today.
+ * Company timeline starter: founding to today.
  *
  * `birthYear` is the founding year, so the AGE column reads as the
  * company's age. Milestones work exactly like a personal timeline:

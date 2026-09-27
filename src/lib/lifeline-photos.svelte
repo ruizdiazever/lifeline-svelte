@@ -4,11 +4,11 @@
 
   /** Tweak these */
   const CARD_WIDTH = 180;
-  /** Matches the events column's pt-6 — cards align with the first event's text. */
+  /** Matches the events column's pt-6: cards align with the first event's text. */
   const EVENT_TOP = 24;
   const MAX_TILT_DEG = 6;
   /**
-   * How far along a card the next one in the stack starts — 0.6 leaves
+   * How far along a card the next one in the stack starts. 0.6 leaves
    * a solid margin of every card visible under its neighbor.
    */
   const STACK_OVERLAP = 0.6;
@@ -21,13 +21,13 @@
   /** Event text column: max-w-[18rem] plus breathing room. */
   const TEXT_ZONE = 288 + 24;
 
-  /** A fresh tilt on every visit — rolled once per card mount. */
+  /** A fresh tilt on every visit, rolled once per card mount. */
   function randomTilt() {
     return 2 + Math.random() * (MAX_TILT_DEG - 2);
   }
 
   /**
-   * Always-visible media scattered over the timeline — anchored to their
+   * Always-visible media scattered over the timeline, anchored to their
    * marker's slot, tilted and overlapping like photos in a notebook.
    * Rendered inside the transformed track, so they ride the scroll;
    * dragging repositions a card for the session.
@@ -57,7 +57,7 @@
   );
 
   // Intro sync: a card fades in when the rail tip reaches it, i.e. on
-  // the schedule of the marker whose slot its center sits over — which
+  // the schedule of the marker whose slot its center sits over, which
   // is usually days past its anchor.
   function markerIndexAt(x: number) {
     for (let index = offsets.length - 1; index >= 0; index--) {
@@ -122,7 +122,7 @@
       {#each photos as photo, photoIndex (`${marker.id}-${photoIndex}`)}
         {@const width = photo.width ?? CARD_WIDTH}
         <!-- Default home: centered in the text-free run between this
-             day's events and the next day that has text — comfortably
+             day's events and the next day that has text, comfortably
              away from both columns. -->
         {@const x =
           photo.x !== undefined
@@ -133,7 +133,7 @@
               )}
         {@const introIndex = markerIndexAt(x + width / 2)}
         <!-- The last card of a stack sits level with the event text;
-             earlier cards hang progressively lower — the diagonal. -->
+             earlier cards hang progressively lower along the diagonal. -->
         {@const defaultY = EVENT_TOP + (photoCount - 1 - photoIndex) * CASCADE_Y}
         {@const y = photo.y ?? defaultY}
         <LifelinePhotoCard

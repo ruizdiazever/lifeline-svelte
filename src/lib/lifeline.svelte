@@ -38,7 +38,7 @@
       the consumer's height lands here, and this element becomes the
       scroll parent the vertical hook looks for. Native overscroll
       chaining then releases to the page at either end, which is
-      exactly the embed contract. Page mode is left alone — the host's
+      exactly the embed contract. Page mode is left alone. The host's
       own scroller owns it there, and `h-full` would only fight it.
     -->
     <div

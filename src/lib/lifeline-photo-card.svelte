@@ -7,7 +7,7 @@
 
   /** Pointer travel below this is a click (opens the lightbox), not a drag. */
   const CLICK_SLOP = 4;
-  /** Fingers wobble more than mice — touch presses get extra tap room. */
+  /** Fingers wobble more than mice: touch presses get extra tap room. */
   const TOUCH_CLICK_SLOP = 10;
 
   /**
@@ -59,7 +59,7 @@
   );
 
   function handlePointerDown(event: PointerEvent) {
-    // The desktop track scrubs on drag — a card drag must not reach it.
+    // The desktop track scrubs on drag; a card drag must not reach it.
     event.stopPropagation();
     event.preventDefault();
     (event.currentTarget as HTMLDivElement).setPointerCapture(event.pointerId);
@@ -83,7 +83,7 @@
   }
 
   // The card's real geometry: bounding-box center (rotation preserves
-  // it) plus untransformed layout size — never the rotated hull, which
+  // it) plus untransformed layout size, never the rotated hull, which
   // is what made the lightbox clone jump on open.
   function measureCard(): LifelineLightboxStart | null {
     const el = cardEl;
@@ -108,14 +108,14 @@
   function handlePointerUp(event: PointerEvent) {
     (event.currentTarget as HTMLDivElement).releasePointerCapture(event.pointerId);
     active = false;
-    // A press that never travelled is a click — expand to the lightbox.
+    // A press that never travelled is a click. Expand to the lightbox.
     if (!drag.moved && !lightboxStart) {
       lightboxStart = measureCard();
     }
   }
 
   // The browser claiming the gesture (a vertical pan-y scroll on
-  // touch) is not a click — reset without opening.
+  // touch) is not a click. Reset without opening.
   function handlePointerCancel(event: PointerEvent) {
     (event.currentTarget as HTMLDivElement).releasePointerCapture(event.pointerId);
     active = false;

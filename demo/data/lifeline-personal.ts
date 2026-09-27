@@ -1,7 +1,7 @@
 import { defineLifeline } from "$lib/lifeline-data"
 
 /**
- * Personal timeline starter — a life, year by year.
+ * Personal timeline starter: a life, year by year.
  *
  * Swap the milestones for your own. Anything you leave out of a year
  * still renders as a tick on the rail, so the empty years carry the
@@ -20,7 +20,7 @@ export const personalLifeline = defineLifeline({
     2008: {
       id: "school",
       events: ["Finished school. Started something else."],
-      // Portraits along the rail — mentors get a role and a color.
+      // Portraits along the rail: mentors get a role and a color.
       // A marker-level field, alongside `events`:
       //
       // mentors: [
@@ -34,7 +34,7 @@ export const personalLifeline = defineLifeline({
     },
     2014: {
       id: "first-job",
-      // Inline organization marks — map ids to icons in
+      // Inline organization marks: map ids to icons in
       // components/lifeline/company-icon.tsx (unmapped ids render
       // the name's initial).
       companies: [{ id: "acme", name: "Acme" }],
@@ -56,7 +56,7 @@ export const personalLifeline = defineLifeline({
           // image: { src: "/moments/the-move.jpg", alt: "The move" },
         },
       ],
-      // People you met — photo-only portraits under the rail.
+      // People you met: photo-only portraits under the rail.
       // Also a marker-level field:
       //
       // met: [{ name: "A Hero", photo: "/images/people/hero.png" }],
@@ -64,7 +64,7 @@ export const personalLifeline = defineLifeline({
     2023: {
       id: "the-project",
       events: ["Started the project everything since has grown from."],
-      // Always-visible floating cards, tilted like a notebook —
+      // Always-visible floating cards, tilted like a notebook and
       // draggable, tap to expand. x is 0..1 across the year's slot:
       //
       // photos: [

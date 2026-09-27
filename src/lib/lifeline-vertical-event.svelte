@@ -24,7 +24,7 @@
   let aspect = 3 / 4;
   let lightboxStart = $state<LifelineLightboxStart | null>(null);
 
-  // The event text has no card geometry — synthesize a small seed
+  // The event text has no card geometry. Synthesize a small seed
   // centered on the text, carrying the media's aspect so the lightbox
   // expands into the right frame.
   function measureText(): LifelineLightboxStart | null {

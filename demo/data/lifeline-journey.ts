@@ -1,7 +1,7 @@
 import { defineLifeline, type LifelineMilestones } from "$lib/lifeline-data"
 
 /**
- * Journey timeline starter — a bounded run with a beginning, an arc,
+ * Journey timeline starter for a bounded run with a beginning, an arc,
  * and an end: a tournament, a tour, a launch, a sabbatical.
  *
  * Instead of years, markers are days: `birthYear`/`endYear` become
@@ -39,7 +39,7 @@ const milestones: LifelineMilestones = {
     age: "W1",
     events: [
       "First stop. Nothing went to plan, which was the plan.",
-      // Badges are small images above a day's events — flags, crests:
+      // Badges are small images above a day's events, e.g. flags or crests:
       // badges: [{ src: "/flags/somewhere.svg", alt: "Somewhere" }],
     ],
   },
@@ -87,7 +87,7 @@ export const journeyLifeline = {
   markers: record.markers.map((marker) => ({
     ...marker,
     // Days with events get the full "Jun 6" label; quiet days just
-    // the day number — and no age unless a stage label is set.
+    // the day number, and no age unless a stage label is set.
     label: marker.events.length > 0 ? fullLabel(marker.year) : dayLabel(marker.year),
     age: marker.age ?? "",
   })),

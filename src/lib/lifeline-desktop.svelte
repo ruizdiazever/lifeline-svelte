@@ -18,7 +18,7 @@
     markers.map((marker, index) => getMarkerWidth(marker, markers[index + 1]?.year)),
   );
 
-  // Left edge of each marker's slot within the track — anchors for the
+  // Left edge of each marker's slot within the track: anchors for the
   // floating photo cards.
   const offsets = $derived.by(() => {
     const result: number[] = [];
@@ -93,7 +93,7 @@
 >
   <LifelineHoverImageProvider preload={hoverImages}>
     <!--
-      Centered — but `safe center` where the browser understands it, which
+      Centered, but `safe center` where the browser understands it, which
       matters once the height is the consumer's to choose. A track taller
       than its box would otherwise overflow equally top and bottom, and
       since the section clips, the first thing lost is the row nearest the
@@ -118,7 +118,7 @@
           read straight through "Age" and "Years".
 
           `bg-white dark:bg-black` to match the framing the shell puts
-          around this — reframe the page on a different surface and this
+          around this. Reframe the page on a different surface and this
           wants overriding with it. The transition is not decoration
           either: without it the shield snaps between the two while the
           page behind it is still crossfading, which flashes a hard box

@@ -10,7 +10,7 @@ export const LIFELINE_LABELS_MS = 600;
 export const LIFELINE_RAIL_MS = 3200;
 /**
  * Track length (px on desktop, tall lifelines on mobile) the base rail
- * duration was tuned for — roughly a 40-year personal lifeline. Longer
+ * duration was tuned for, roughly a 40-year personal lifeline. Longer
  * tracks slow the sweep sublinearly so dense timelines stay readable,
  * capped so a 250-year nation doesn't become a screensaver.
  */
@@ -18,7 +18,7 @@ export const LIFELINE_REFERENCE_TRACK = 9000;
 export const LIFELINE_RAIL_MAX_MS = 7200;
 export const LIFELINE_RAIL_SCALE_POWER = 0.45;
 /**
- * Keep fade stretching subtle — long fades lag behind the sweeping
+ * Keep fade stretching subtle: long fades lag behind the sweeping
  * line and read as out of sync.
  */
 export const LIFELINE_FADE_SCALE_MAX = 1.5;

@@ -69,7 +69,7 @@ void main() {
   for (int i = 0; i < N_FIREWORKS; i++) {
     float fi = float(i);
     float t0 = 0.35 + fi * (u_dur - 2.8) / float(N_FIREWORKS) + hash(fi * 7.31) * 0.3;
-    // No flow control in the loop — some WebGL1 driver translations
+    // No flow control in the loop: some WebGL1 driver translations
     // mishandle continue, so inactive bursts multiply to zero instead.
     float active = step(t0, t) * step(t, t0 + 1.8);
     float lt = clamp((t - t0) / 1.8, 0.0, 1.0);

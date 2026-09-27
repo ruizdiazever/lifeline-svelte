@@ -1,7 +1,7 @@
 import { defineLifeline } from "$lib/lifeline-data"
 
 /**
- * The demo timeline — Evil Rabbit's own, mentors and met-in-person
+ * The demo timeline: Evil Rabbit's own, mentors and met-in-person
  * included. Event photos and videos land later; see the README for
  * how events carry hover images and floating photo cards.
  */
@@ -11,7 +11,7 @@ const record = defineLifeline({
   birthYear: 1986,
   endYear: 2026,
   description:
-    "The life and career of Evil Rabbit — from Buenos Aires to Vercel.",
+    "The life and career of Evil Rabbit, from Buenos Aires to Vercel.",
   milestones: {
     1986: {
       id: "born",
@@ -269,7 +269,7 @@ const record = defineLifeline({
             value: "Lifeline",
             href: "https://github.com/evilrabbit/lifeline",
           },
-          { type: "text", value: " — the component you are looking at." },
+          { type: "text", value: ", the component you are looking at." },
         ],
       ],
     },
