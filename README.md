@@ -70,6 +70,23 @@ Dark mode is class-based (`.dark` on `<html>`), matching the `dark:` variants th
 
 `mode`: `"page"` (the timeline owns the wheel), `"embed"` (hands the wheel back at the rail's ends), `"auto"` (measured at runtime).
 
+### Age and birthdays
+
+The Age row reads `year - birthYear`. For a living person, pass `birthday` so the current year doesn't count a birthday that hasn't happened yet:
+
+```ts
+const record = defineLifeline({
+  slug: "me",
+  name: "Me",
+  birthYear: 1990,
+  birthday: { month: 9, day: 14 },
+  description: "My story.",
+  milestones: { 1990: { id: "born", events: ["Born."] } },
+});
+```
+
+Past years already read correct; only the current year is adjusted. It does not apply in month granularity, where `birthMonth` places the age row instead.
+
 ### Month granularity
 
 By default the rail is one column per year. For young stories such as a company or a product, `granularity: "months"` makes it one column per month, keyed `YYYYMM`:

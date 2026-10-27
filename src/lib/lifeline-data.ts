@@ -4,12 +4,18 @@ import type {
   LifelineMarker,
 } from "./types"
 
-export const LIFELINE_CURRENT_YEAR = 2026
+/** Calendar year at load time: the last year a years-mode timeline reaches by default. */
+export const LIFELINE_CURRENT_YEAR = new Date().getFullYear()
 
 export type LifelineMilestone = Omit<LifelineMarker, "year">
 export type LifelineMilestones = Record<number, LifelineMilestone>
 
 export type LifelineGranularity = "years" | "months"
+
+export interface LifelineBirthday {
+  month: number
+  day: number
+}
 
 const MONTH_NAMES = [
   "Jan",
@@ -50,6 +56,8 @@ export interface LifelineRecord {
   slug: string
   name: string
   birthYear: number
+  /** Birthday (1-12 / 1-31): the current year counts one age less until it passes. */
+  birthday?: LifelineBirthday
   /** Last year on the timeline. Omit for living people. */
   endYear?: number
   description: string
@@ -62,6 +70,8 @@ interface DefineLifelineInput {
   slug: string
   name: string
   birthYear: number
+  /** Birthday (1-12 / 1-31) for a years-mode life; ignored when `granularity` is "months". */
+  birthday?: LifelineBirthday
   endYear?: number
   /** Axis unit. "months" expects YYYYMM milestone keys (e.g. 202405). */
   granularity?: LifelineGranularity
@@ -122,15 +132,26 @@ function buildYearMarkers(
 ): LifelineMarker[] {
   const lastYear = input.endYear ?? LIFELINE_CURRENT_YEAR
   const markers: LifelineMarker[] = []
+  const birthday = input.birthday
+  const today = new Date()
+  const birthdayPending =
+    birthday !== undefined &&
+    (today.getMonth() + 1 < birthday.month ||
+      (today.getMonth() + 1 === birthday.month && today.getDate() < birthday.day))
 
   for (let year = input.birthYear; year <= lastYear; year++) {
     const milestone = milestones[year]
+    const age =
+      birthdayPending && year === LIFELINE_CURRENT_YEAR
+        ? year - input.birthYear - 1
+        : undefined
 
-    markers.push(
-      milestone
-        ? { year, ...milestone }
-        : { id: `year-${year}`, year, events: [] },
-    )
+    const marker: LifelineMarker = milestone
+      ? { year, ...milestone }
+      : { id: `year-${year}`, year, events: [] }
+
+    if (age !== undefined && marker.age === undefined) marker.age = age
+    markers.push(marker)
   }
 
   return markers
